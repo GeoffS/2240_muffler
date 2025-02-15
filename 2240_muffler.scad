@@ -1,10 +1,14 @@
 include <../OpenSCAD_Lib/MakeInclude.scad>
 include <../OpenSCAD_Lib/chamferedCylinders.scad>
 
+innerWallPerimeterWidth = 0.42;
+outerWallPerimeterWidth = 0.45;
+
 adapterOD = 19.9;
 adapterRecessZ = 25;
-adapterEndWall = 2;
+adapterEndWall = 2*outerWallPerimeterWidth + 3*innerWallPerimeterWidth;
 adapterCZ = 12;
+echo(str("adapterEndWall = ", adapterEndWall));
 
 mufflerOD = 60;
 mufflerWallThickness = 6;
@@ -68,7 +72,8 @@ module itemModule()
 	}
 }
 
-baffleZ = 4;
+baffleZ = 2*outerWallPerimeterWidth + 5*innerWallPerimeterWidth;
+echo(str("baffleZ = ", baffleZ));
 module baffle()
 {
 	cylinder(d=mufflerOD, h=baffleZ, $fn=6);
