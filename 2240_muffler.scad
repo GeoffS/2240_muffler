@@ -25,23 +25,30 @@ echo(str("mufflerID = ", mufflerID));
 frontZ = 6;
 frontCZ = 4;
 
+exteriorFN = 8;
+exteriorAngleZ = 360/exteriorFN/2;
+
 module itemModule()
 {
 	difference()
 	{
 		// Exterior:
-		union()
+		
+		rotate([0,0,exteriorAngleZ]) union()
 		{
-			mirror([0,0,1]) simpleChamferedCylinder(d=mufflerOD, h=frontZ, cz=frontCZ, $fn=6);
-			simpleChamferedCylinder(d=mufflerOD, h=mufflerZ+adapterRecessZ+adapterEndWall, cz=adapterCZ, $fn=6);
+			mirror([0,0,1]) simpleChamferedCylinder(d=mufflerOD, h=frontZ, cz=frontCZ, $fn=exteriorFN);
+			simpleChamferedCylinder(d=mufflerOD, h=mufflerZ+adapterRecessZ+adapterEndWall, cz=adapterCZ, $fn=exteriorFN);
 		}
 
 		// Interior:
+		rotate([0,0,30])
+		{
 		frontInteriorZ = 20;
 		frontInteriorCZ = 6;
 		translate([0,0,frontInteriorZ]) mirror([0,0,1]) simpleChamferedCylinder(d=mufflerID, h=frontInteriorZ, cz=frontInteriorCZ, $fn=6);
 		rearInteriorCZ = 9;
 		translate([0,0,frontInteriorZ-nothing]) simpleChamferedCylinder(d=mufflerID, h=mufflerZ-frontInteriorZ+nothing, cz=rearInteriorCZ, $fn=6);
+		}
 
 		// Inner hole:
 		// Front (will be drilled/reamed out):
@@ -57,17 +64,17 @@ module itemModule()
 			// Chamfer at exterior opening:
 			translate([0,0,adapterRecessZ-adapterOD/2-2]) cylinder(d2=40, d1=0, h=20, $fn=6);
 		}
-
 	}
 
+	// Baffles:
 	difference()
 	{
-		for (z=[50, 100]) 
+		rotate([0,0,exteriorAngleZ]) for (z=[50, 100]) 
 		{
 			translate([0,0,z]) baffle();
 		}
 		
-		// Interior:
+		// Interior hole:
 		tcy([0,0,frontZ+1], d=innerDiaInterior, h=400);
 	}
 }
@@ -76,12 +83,13 @@ baffleZ = 2*outerWallPerimeterWidth + 5*innerWallPerimeterWidth;
 echo(str("baffleZ = ", baffleZ));
 module baffle()
 {
-	cylinder(d=mufflerOD, h=baffleZ, $fn=6);
+	cylinder(d=mufflerOD, h=baffleZ, $fn=exteriorFN);
 }
 
 module clip(d=0)
 {
-	tc([-200, -400-d, -10], 400);
+	// tc([-200, -400-d, -10], 400);
+	// tc([-200, -200, 25-d], 400);
 }
 
 if(developmentRender)
