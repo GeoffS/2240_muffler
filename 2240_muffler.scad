@@ -19,7 +19,7 @@ mufflerID = mufflerOD - 2*mufflerWallThickness;
 echo(str("mufflerID = ", mufflerID));
 
 frontZ = 6;
-frontCZ = 3;
+frontCZ = 4;
 
 module itemModule()
 {
@@ -27,13 +27,17 @@ module itemModule()
 	{
 		union()
 		{
-			// cylinder(d=mufflerOD, h=mufflerZ+adapterRecessZ+adapterEndWall, $fn=6);
 			mirror([0,0,1]) simpleChamferedCylinder(d=mufflerOD, h=frontZ, cz=frontCZ, $fn=6);
 			simpleChamferedCylinder(d=mufflerOD, h=mufflerZ+adapterRecessZ+adapterEndWall, cz=adapterCZ, $fn=6);
 		}
 
 		// Interior:
-		tcy([0,0,0], d=mufflerID, h=mufflerZ-frontZ, $fn=6);
+		//tcy([0,0,0], d=mufflerID, h=mufflerZ-frontZ, $fn=6);
+		frontInteriorZ = 20;
+		frontInteriorCZ = 6;
+		translate([0,0,frontInteriorZ]) mirror([0,0,1]) simpleChamferedCylinder(d=mufflerID, h=frontInteriorZ, cz=frontInteriorCZ, $fn=6);
+		rearInteriorCZ = 9;
+		translate([0,0,frontInteriorZ-nothing]) simpleChamferedCylinder(d=mufflerID, h=mufflerZ-frontInteriorZ+nothing, cz=rearInteriorCZ, $fn=6);
 
 		// Inner hole:
 		// Front (will be drilled/reamed out):
