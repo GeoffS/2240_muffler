@@ -28,6 +28,9 @@ frontCZ = 4;
 exteriorFN = 8;
 exteriorAngleZ = 360/exteriorFN/2;
 
+interiorFN = 6;
+interiorAngleZ = 30; //360/exteriorFN/2;
+
 module itemModule()
 {
 	difference()
@@ -41,13 +44,13 @@ module itemModule()
 		}
 
 		// Interior:
-		rotate([0,0,30])
+		rotate([0,0,interiorAngleZ])
 		{
-		frontInteriorZ = 20;
-		frontInteriorCZ = 6;
-		translate([0,0,frontInteriorZ]) mirror([0,0,1]) simpleChamferedCylinder(d=mufflerID, h=frontInteriorZ, cz=frontInteriorCZ, $fn=6);
-		rearInteriorCZ = 9;
-		translate([0,0,frontInteriorZ-nothing]) simpleChamferedCylinder(d=mufflerID, h=mufflerZ-frontInteriorZ+nothing, cz=rearInteriorCZ, $fn=6);
+			frontInteriorZ = 20;
+			frontInteriorCZ = 6;
+			translate([0,0,frontInteriorZ]) mirror([0,0,1]) simpleChamferedCylinder(d=mufflerID, h=frontInteriorZ, cz=frontInteriorCZ, $fn=interiorFN);
+			rearInteriorCZ = 9;
+			translate([0,0,frontInteriorZ-nothing]) simpleChamferedCylinder(d=mufflerID, h=mufflerZ-frontInteriorZ+nothing, cz=rearInteriorCZ, $fn=interiorFN);
 		}
 
 		// Inner hole:
@@ -89,7 +92,7 @@ module baffle()
 module clip(d=0)
 {
 	// tc([-200, -400-d, -10], 400);
-	// tc([-200, -200, 25-d], 400);
+	tc([-200, -200, 25-d], 400);
 }
 
 if(developmentRender)
