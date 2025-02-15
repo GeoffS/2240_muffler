@@ -46,7 +46,14 @@ module itemModule()
 		tcy([0,0,mufflerZ-1], d=innerDiaAdaper, h=400);
 
 		// Recess for the adapter:
-		rotate([0,0,30]) tcy([0,0,mufflerZ+adapterEndWall], d=adapterOD, h=100, $fn=6);
+		rotate([0,0,30]) translate([0,0,mufflerZ+adapterEndWall])
+		{
+			// Adapter recess:
+			cylinder(d=adapterOD, h=100, $fn=6);
+			// Chamfer at exterior opening:
+			translate([0,0,adapterRecessZ-adapterOD/2-2]) cylinder(d2=40, d1=0, h=20, $fn=6);
+		}
+
 	}
 
 	difference()
