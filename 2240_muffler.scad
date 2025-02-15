@@ -25,6 +25,7 @@ module itemModule()
 {
 	difference()
 	{
+		// Exterior:
 		union()
 		{
 			mirror([0,0,1]) simpleChamferedCylinder(d=mufflerOD, h=frontZ, cz=frontCZ, $fn=6);
@@ -32,7 +33,6 @@ module itemModule()
 		}
 
 		// Interior:
-		//tcy([0,0,0], d=mufflerID, h=mufflerZ-frontZ, $fn=6);
 		frontInteriorZ = 20;
 		frontInteriorCZ = 6;
 		translate([0,0,frontInteriorZ]) mirror([0,0,1]) simpleChamferedCylinder(d=mufflerID, h=frontInteriorZ, cz=frontInteriorCZ, $fn=6);
@@ -42,14 +42,29 @@ module itemModule()
 		// Inner hole:
 		// Front (will be drilled/reamed out):
 		tcy([0,0,-frontZ-1], d=innerDiaFront, h=frontZ+2);
-		// Interior:
-		tcy([0,0,frontZ+1], d=innerDiaInterior, h=400);
 		// Adapter end::
 		tcy([0,0,mufflerZ-1], d=innerDiaAdaper, h=400);
 
 		// Recess for the adapter:
 		rotate([0,0,30]) tcy([0,0,mufflerZ+adapterEndWall], d=adapterOD, h=100, $fn=6);
 	}
+
+	difference()
+	{
+		for (z=[50, 100]) 
+		{
+			translate([0,0,z]) baffle();
+		}
+		
+		// Interior:
+		tcy([0,0,frontZ+1], d=innerDiaInterior, h=400);
+	}
+}
+
+baffleZ = 4;
+module baffle()
+{
+	cylinder(d=mufflerOD, h=baffleZ, $fn=6);
 }
 
 module clip(d=0)
