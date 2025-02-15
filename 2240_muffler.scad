@@ -29,14 +29,13 @@ exteriorFN = 8;
 exteriorAngleZ = 360/exteriorFN/2;
 
 interiorFN = 6;
-interiorAngleZ = 30; //360/exteriorFN/2;
+interiorAngleZ = 30;
 
 module itemModule()
 {
 	difference()
 	{
 		// Exterior:
-		
 		rotate([0,0,exteriorAngleZ]) union()
 		{
 			mirror([0,0,1]) simpleChamferedCylinder(d=mufflerOD, h=frontZ, cz=frontCZ, $fn=exteriorFN);
@@ -92,7 +91,7 @@ module baffle()
 module clip(d=0)
 {
 	// tc([-200, -400-d, -10], 400);
-	tc([-200, -200, 25-d], 400);
+	// tc([-200, -200, 25-d], 400);
 }
 
 if(developmentRender)
