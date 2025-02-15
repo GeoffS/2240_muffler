@@ -6,8 +6,8 @@ module itemModule()
 {
 	difference()
 	{
-		rotate([0,0,22.5]) cylinder(d=30, h=10, $fn=8);
-		rotate([0,0,30]) tcy([0,0,-1], d=adapterOD, h=20, $fn=6);
+		rotate([0,0,0]) cylinder(d=40, h=20, $fn=6);
+		rotate([0,0,30]) tcy([0,0,-1], d=adapterOD, h=100, $fn=6);
 	}
 }
 
