@@ -1,4 +1,5 @@
 include <../OpenSCAD_Lib/MakeInclude.scad>
+include <../OpenSCAD_Lib/chamferedCylinders.scad>
 
 adapterOD = 19.9;
 adapterRecessZ = 25;
@@ -9,7 +10,9 @@ mufflerWallThickness = 6;
 
 mufflerZ = 150;
 
-innerDia = 6;
+innerDiaFront = 5; // drilled/reamed out to final dia.
+innerDiaInterior = 6.5;
+innerDiaAdaper = 9;
 
 mufflerID = mufflerOD - 2*mufflerWallThickness;
 echo(str("mufflerID = ", mufflerID));
@@ -23,13 +26,19 @@ module itemModule()
 		union()
 		{
 			cylinder(d=mufflerOD, h=mufflerZ+adapterRecessZ+adapterEndWall, $fn=6);
+			// chamfered
 		}
 
 		// Interior:
 		tcy([0,0,frontZ], d=mufflerID, h=mufflerZ-frontZ, $fn=6);
 
 		// Inner hole:
-		tcy([0,0,-1], d=innerDia, h=400);
+		// Front (will be drilled/reamed out):
+		tcy([0,0,-1], d=innerDiaFront, h=frontZ+2);
+		// Interior:
+		tcy([0,0,frontZ+1], d=innerDiaInterior, h=400);
+		// Adapter end::
+		tcy([0,0,mufflerZ-1], d=innerDiaAdaper, h=400);
 
 		// Recess for the adapter:
 		rotate([0,0,30]) tcy([0,0,mufflerZ+adapterEndWall], d=adapterOD, h=100, $fn=6);
