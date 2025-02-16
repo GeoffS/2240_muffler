@@ -2,8 +2,10 @@ include <../OpenSCAD_Lib/MakeInclude.scad>
 include <../OpenSCAD_Lib/chamferedCylinders.scad>
 include <makeText.scad>
 
-makeFull = false;
-makeTest = false;
+makeFullHorizontalPrint = false;
+makeTestHorizontalPrint = false;
+makeFullVerticalPrint = false;
+makeTestVerticalPrint = false;
 
 innerWallPerimeterWidth = 0.42;
 outerWallPerimeterWidth = 0.45;
@@ -42,7 +44,7 @@ echo(str("mufflerTopZ = ", mufflerTopZ));
 
 exteriorOffsetXY = mufflerOD/2 * cos((360/exteriorFN/2));
 
-module itemModule()
+module itemModule(addBrims)
 {
 	difference()
 	{
@@ -96,7 +98,7 @@ module itemModule()
 			}
 
 			// End brims to help with warping:
-			translate([0, -exteriorOffsetXY, 0]) rotate([-90,0,0]) rotate([0,0,-90]) 
+			if(addBrims) translate([0, -exteriorOffsetXY, 0]) rotate([-90,0,0]) rotate([0,0,-90]) 
 			{
 				d = 45;
 				tcy([-frontZ+frontCZ,0,0], d=d, h=firstLayerHeight+layerHeight);
@@ -135,6 +137,16 @@ module testModule()
 	}
 }
 
+module testModuleHorizontal()
+{
+	testModule();
+}
+
+module testModuleVertical()
+{
+	testModule();
+}
+
 module clip(d=0)
 {
 	// tc([-200, -400-d, -10], 400);
@@ -144,12 +156,14 @@ module clip(d=0)
 
 if(developmentRender)
 {
-	display() itemModule();
+	display() itemModule(addBrims=true);
 	// display() testModule();
 	// display() rotate([90,0,0]) itemModule();
 }
 else
 {
-	if(makeFull) rotate([90,0,0]) itemModule();
-	if(makeTest) rotate([90,0,0]) testModule();
+	if(makeFullHorizontalPrint) rotate([90,0,0]) itemModule(addBrims=true);
+	if(makeTestHorizontalPrint) rotate([90,0,0]) testModule();
+	if(makeFullVerticalPrint) itemModule(addBrims=false);
+	if(makeTestVerticalPrint) testModule();
 }
