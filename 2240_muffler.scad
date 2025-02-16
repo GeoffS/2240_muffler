@@ -1,10 +1,13 @@
 include <../OpenSCAD_Lib/MakeInclude.scad>
 include <../OpenSCAD_Lib/chamferedCylinders.scad>
 
+makeFull = false;
+makeTest = false;
+
 innerWallPerimeterWidth = 0.42;
 outerWallPerimeterWidth = 0.45;
 
-adapterOD = 19.9;
+adapterOD = 20.2;
 adapterRecessZ = 25;
 adapterEndWall = 2*outerWallPerimeterWidth + 3*innerWallPerimeterWidth;
 adapterCZ = 12;
@@ -31,6 +34,9 @@ exteriorAngleZ = 360/exteriorFN/2;
 interiorFN = 6;
 interiorAngleZ = 30;
 
+mufflerTopZ = mufflerZ+adapterRecessZ+adapterEndWall;
+echo(str("mufflerTopZ = ", mufflerTopZ));
+
 module itemModule()
 {
 	difference()
@@ -39,7 +45,7 @@ module itemModule()
 		rotate([0,0,exteriorAngleZ]) union()
 		{
 			mirror([0,0,1]) simpleChamferedCylinder(d=mufflerOD, h=frontZ, cz=frontCZ, $fn=exteriorFN);
-			simpleChamferedCylinder(d=mufflerOD, h=mufflerZ+adapterRecessZ+adapterEndWall, cz=adapterCZ, $fn=exteriorFN);
+			simpleChamferedCylinder(d=mufflerOD, h=mufflerTopZ, cz=adapterCZ, $fn=exteriorFN);
 		}
 
 		// Interior:
@@ -88,6 +94,18 @@ module baffle()
 	cylinder(d=mufflerOD, h=baffleZ, $fn=exteriorFN);
 }
 
+module testModule()
+{
+	difference()
+	{
+		itemModule();
+		tcy([0,0,-400+mufflerZ-2], d=100, h=400);
+		topClipZ = mufflerTopZ-adapterCZ+2;
+		tcy([0,0,topClipZ], d=100, h=400);
+		rotate([0,0,30]) translate([0,0,topClipZ-adapterOD/2-2]) cylinder(d2=40, d1=0, h=20, $fn=6);
+	}
+}
+
 module clip(d=0)
 {
 	// tc([-200, -400-d, -10], 400);
@@ -96,9 +114,11 @@ module clip(d=0)
 
 if(developmentRender)
 {
-	display() itemModule();
+	// display() itemModule();
+	display() testModule();
 }
 else
 {
-	rotate([90,0,0]) itemModule();
+	if(makeFull) rotate([90,0,0]) itemModule();
+	if(makeTest) rotate([90,0,0]) testModule();
 }
