@@ -7,6 +7,7 @@ makeTest = false;
 
 innerWallPerimeterWidth = 0.42;
 outerWallPerimeterWidth = 0.45;
+firstLayerHeight = 0.2;
 layerHeight = 0.2;
 
 adapterOD = 20.2;
@@ -38,6 +39,8 @@ interiorAngleZ = 30;
 
 mufflerTopZ = mufflerZ + adapterRecessZ + adapterEndWall;
 echo(str("mufflerTopZ = ", mufflerTopZ));
+
+exteriorOffsetXY = mufflerOD/2 * cos((360/exteriorFN/2));
 
 module itemModule()
 {
@@ -91,10 +94,17 @@ module itemModule()
 				// Interior hole:
 				tcy([0,0,frontZ+1], d=innerDiaInterior, h=400);
 			}
+
+			// End brims to help with warping:
+			translate([0, -exteriorOffsetXY, 0]) rotate([-90,0,0]) rotate([0,0,-90]) 
+			{
+				d = 45;
+				tcy([-frontZ+frontCZ,0,0], d=d, h=firstLayerHeight+layerHeight);
+				tcy([mufflerTopZ - adapterCZ,0,0], d=d, h=firstLayerHeight+layerHeight);
+			}
 		}
 
 		// Top text:
-		exteriorOffsetXY = mufflerOD/2 * cos((360/exteriorFN/2));
 		textIndent = 2*layerHeight;
 		textCenterZ = mufflerTopZ - adapterCZ;
 		topTextStr = ".22 cal. Airgun Use Only";
