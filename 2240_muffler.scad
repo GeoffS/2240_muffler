@@ -12,7 +12,7 @@ outerWallPerimeterWidth = 0.45;
 firstLayerHeight = 0.2;
 layerHeight = 0.2;
 
-adapterOD = 20.2;
+adapterOD = 20.0;
 adapterRecessZ = 25;
 adapterEndWall = 2*outerWallPerimeterWidth + 3*innerWallPerimeterWidth;
 adapterCZ = 12;
@@ -125,12 +125,15 @@ module baffle()
 	cylinder(d=mufflerOD, h=baffleZ, $fn=exteriorFN);
 }
 
-module testModule()
+module testModule(addBrims)
 {
 	difference()
 	{
-		itemModule();
-		tcy([0,0,-400+mufflerZ-2], d=100, h=400);
+		itemModule(addBrims);
+
+		// tcy([0,0,-400+mufflerZ-2], d=100, h=400);
+		tcy([0,0,-400+mufflerZ], d=100, h=400);
+
 		topClipZ = mufflerTopZ-adapterCZ+2;
 		tcy([0,0,topClipZ], d=100, h=400);
 		rotate([0,0,30]) translate([0,0,topClipZ-adapterOD/2-2]) cylinder(d2=40, d1=0, h=20, $fn=6);
@@ -156,14 +159,14 @@ module clip(d=0)
 
 if(developmentRender)
 {
-	display() itemModule(addBrims=true);
-	// display() testModule();
+	// display() itemModule(addBrims=true);
+	display() testModule(addBrims=false);
 	// display() rotate([90,0,0]) itemModule();
 }
 else
 {
 	if(makeFullHorizontalPrint) rotate([90,0,0]) itemModule(addBrims=true);
-	if(makeTestHorizontalPrint) rotate([90,0,0]) testModule();
+	if(makeTestHorizontalPrint) rotate([90,0,0]) testModule(addBrims=false);
 	if(makeFullVerticalPrint) itemModule(addBrims=false);
-	if(makeTestVerticalPrint) testModule();
+	if(makeTestVerticalPrint) testModule(addBrims=false);
 }
