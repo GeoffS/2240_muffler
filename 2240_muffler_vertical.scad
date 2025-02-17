@@ -3,7 +3,7 @@ include <../OpenSCAD_Lib/chamferedCylinders.scad>
 include <makeText.scad>
 
 makeFull = false;
-makeTes = false;
+makeTest = false;
 
 innerWallPerimeterWidth = 0.42;
 outerWallPerimeterWidth = 0.45;
@@ -130,19 +130,9 @@ module testModule()
 	}
 }
 
-module testModuleHorizontal()
-{
-	testModule();
-}
-
-module testModuleVertical()
-{
-	testModule();
-}
-
 module clip(d=0)
 {
-	// tc([-200, -400-d, -10], 400);
+	tc([-200, -400-d, -10], 400);
 	// tc([-400-d, -300, -10], 400);
 	// tc([-200, -200, 25-d], 400);
 }
@@ -154,6 +144,6 @@ if(developmentRender)
 }
 else
 {
-	if(makeFullVerticalPrint) itemModule(addBrims=true);
-	if(makeTestVerticalPrint) testModule(addBrims=false);
+	if(makeFull) itemModule(addBrims=true);
+	if(makeTest) testModule(addBrims=false);
 }
