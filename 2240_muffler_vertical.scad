@@ -52,13 +52,16 @@ module itemModule()
 
                     difference()
                     {
+                        frontExtraZ = frontZ - frontCZ;
                         x = 14;
-                        y = exteriorOffsetXY;
-                        z = mufflerTopZ + frontZ;
-                        tcu([-x/2, 0, -frontZ], [x, y, z]);
+                        y = nothing;
+                        z = mufflerTopZ - adapterCZ + frontExtraZ;
+                        tcu([-x/2, exteriorOffsetXY-nothing, -frontExtraZ], [x, y, z]);
 
-                        // MAGIC NUMBER: -2.8
-                        translate([0,exteriorOffsetXY,-frontZ]) rotate([-45,0,0]) tcu([-200,-2.8,-200], 400);
+                        // // MAGIC NUMBER: -2.8
+                        // translate([0,exteriorOffsetXY,-frontZ]) rotate([-45,0,0]) tcu([-200,-2.8,-200], 400);
+                        // // MAGIC NUMBER: -x,x
+                        // translate([0,exteriorOffsetXY,mufflerTopZ]) rotate([52,0,0]) tcu([-200,-9.5,-200], 400);
                     }
 				}
 
@@ -106,9 +109,9 @@ module itemModule()
 		textCenterZ = mufflerTopZ - adapterCZ;
 		topTextStr = ".22 cal. Airgun Use Only";
 		echo(str("exteriorOffsetXY = ", exteriorOffsetXY));
-		translate([0, exteriorOffsetXY-textIndent, textCenterZ/2]) rotate([-90,0,0]) rotate([0,0,-90]) 
+		translate([-0.55, exteriorOffsetXY-textIndent, textCenterZ/2]) rotate([-90,0,0]) rotate([0,0,-90]) 
 		{
-			#makeText(topTextStr); 
+			makeText(topTextStr); 
 		}
 	}
 }
