@@ -10,7 +10,7 @@ outerWallPerimeterWidth = 0.45;
 firstLayerHeight = 0.2;
 layerHeight = 0.2;
 
-adapterOD = 20.0;
+adapterOD = 20.1;
 adapterRecessZ = 25;
 adapterEndWall = 2*outerWallPerimeterWidth + 3*innerWallPerimeterWidth;
 adapterCZ = 12;
@@ -50,19 +50,11 @@ module itemModule()
 					mirror([0,0,1]) simpleChamferedCylinder(d=mufflerOD, h=frontZ, cz=frontCZ);
 					simpleChamferedCylinder(d=mufflerOD, h=mufflerTopZ, cz=adapterCZ);
 
-                    difference()
-                    {
-                        frontExtraZ = frontZ - frontCZ;
-                        x = 14;
-                        y = nothing;
-                        z = mufflerTopZ - adapterCZ + frontExtraZ;
-                        tcu([-x/2, exteriorOffsetXY-nothing, -frontExtraZ], [x, y, z]);
-
-                        // // MAGIC NUMBER: -2.8
-                        // translate([0,exteriorOffsetXY,-frontZ]) rotate([-45,0,0]) tcu([-200,-2.8,-200], 400);
-                        // // MAGIC NUMBER: -x,x
-                        // translate([0,exteriorOffsetXY,mufflerTopZ]) rotate([52,0,0]) tcu([-200,-9.5,-200], 400);
-                    }
+                    frontExtraZ = frontZ - frontCZ;
+                    x = 14;
+                    y = nothing;
+                    z = mufflerTopZ - adapterCZ + frontExtraZ;
+                    tcu([-x/2, exteriorOffsetXY-nothing, -frontExtraZ], [x, y, z]);
 				}
 
 				// Interior:
