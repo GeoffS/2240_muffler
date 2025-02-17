@@ -84,7 +84,7 @@ module itemModule()
 			}
 
 			// Baffles:
-			for (z=[50, 100]) 
+            for (z=[85, 45, 18]) 
             {
                 translate([0,0,z]) baffle();
             }
