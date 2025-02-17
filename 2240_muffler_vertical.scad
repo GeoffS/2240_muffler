@@ -31,16 +31,10 @@ echo(str("mufflerID = ", mufflerID));
 frontZ = 6;
 frontCZ = 4;
 
-exteriorFN = 8;
-exteriorAngleZ = 360/exteriorFN/2;
-
-interiorFN = 6;
-interiorAngleZ = 30;
-
 mufflerTopZ = mufflerZ + adapterRecessZ + adapterEndWall;
 echo(str("mufflerTopZ = ", mufflerTopZ));
 
-exteriorOffsetXY = mufflerOD/2 * cos((360/exteriorFN/2));
+exteriorOffsetXY = mufflerOD/2; //mufflerOD/2 * cos((360/exteriorFN/2));
 
 module itemModule()
 {
@@ -51,20 +45,31 @@ module itemModule()
 			difference()
 			{
 				// Exterior:
-				rotate([0,0,exteriorAngleZ]) union()
+				hull()
 				{
-					mirror([0,0,1]) simpleChamferedCylinder(d=mufflerOD, h=frontZ, cz=frontCZ, $fn=exteriorFN);
-					simpleChamferedCylinder(d=mufflerOD, h=mufflerTopZ, cz=adapterCZ, $fn=exteriorFN);
+					mirror([0,0,1]) simpleChamferedCylinder(d=mufflerOD, h=frontZ, cz=frontCZ);
+					simpleChamferedCylinder(d=mufflerOD, h=mufflerTopZ, cz=adapterCZ);
+
+                    difference()
+                    {
+                        x = 14;
+                        y = exteriorOffsetXY;
+                        z = mufflerTopZ + frontZ;
+                        tcu([-x/2, 0, -frontZ], [x, y, z]);
+
+                        // MAGIC NUMBER: -2.8
+                        translate([0,exteriorOffsetXY,-frontZ]) rotate([-45,0,0]) tcu([-200,-2.8,-200], 400);
+                    }
 				}
 
 				// Interior:
-				rotate([0,0,interiorAngleZ])
+				union()
 				{
 					frontInteriorZ = 20;
 					frontInteriorCZ = 6;
-					translate([0,0,frontInteriorZ]) mirror([0,0,1]) simpleChamferedCylinder(d=mufflerID, h=frontInteriorZ, cz=frontInteriorCZ, $fn=interiorFN);
+					translate([0,0,frontInteriorZ]) mirror([0,0,1]) simpleChamferedCylinder(d=mufflerID, h=frontInteriorZ, cz=frontInteriorCZ);
 					rearInteriorCZ = 9;
-					translate([0,0,frontInteriorZ-nothing]) simpleChamferedCylinder(d=mufflerID, h=mufflerZ-frontInteriorZ+nothing, cz=rearInteriorCZ, $fn=interiorFN);
+					translate([0,0,frontInteriorZ-nothing]) simpleChamferedCylinder(d=mufflerID, h=mufflerZ-frontInteriorZ+nothing, cz=rearInteriorCZ);
 				}
 
 				// Inner hole:
@@ -86,7 +91,7 @@ module itemModule()
 			// Baffles:
 			difference()
 			{
-				rotate([0,0,exteriorAngleZ]) for (z=[50, 100]) 
+				for (z=[50, 100]) 
 				{
 					translate([0,0,z]) baffle();
 				}
@@ -103,7 +108,7 @@ module itemModule()
 		echo(str("exteriorOffsetXY = ", exteriorOffsetXY));
 		translate([0, exteriorOffsetXY-textIndent, textCenterZ/2]) rotate([-90,0,0]) rotate([0,0,-90]) 
 		{
-			makeText(topTextStr); 
+			#makeText(topTextStr); 
 		}
 	}
 }
@@ -112,7 +117,7 @@ baffleZ = 2*outerWallPerimeterWidth + 5*innerWallPerimeterWidth;
 echo(str("baffleZ = ", baffleZ));
 module baffle()
 {
-	cylinder(d=mufflerOD, h=baffleZ, $fn=exteriorFN);
+	cylinder(d=mufflerOD, h=baffleZ);
 }
 
 module testModule()
@@ -143,7 +148,7 @@ module testModuleVertical()
 module clip(d=0)
 {
 	// tc([-200, -400-d, -10], 400);
-	tc([-400-d, -300, -10], 400);
+	// tc([-400-d, -300, -10], 400);
 	// tc([-200, -200, 25-d], 400);
 }
 
