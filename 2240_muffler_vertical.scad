@@ -63,7 +63,7 @@ module itemModule()
 					frontInteriorZ = 20;
 					frontInteriorCZ = 6;
 					translate([0,0,frontInteriorZ]) mirror([0,0,1]) simpleChamferedCylinder(d=mufflerID, h=frontInteriorZ, cz=frontInteriorCZ);
-					rearInteriorCZ = 9;
+					rearInteriorCZ = 20;
 					translate([0,0,frontInteriorZ-nothing]) simpleChamferedCylinder(d=mufflerID, h=mufflerZ-frontInteriorZ+nothing, cz=rearInteriorCZ);
 				}
 
@@ -84,7 +84,7 @@ module itemModule()
 			}
 
 			// Baffles:
-            for (z=[85, 45, 18]) 
+            for (z=[80, 45, 16]) 
             {
                 translate([0,0,z]) baffle();
             }
