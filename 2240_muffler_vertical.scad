@@ -107,9 +107,8 @@ echo(str("baffleZ = ", baffleZ));
 module baffle()
 {
 	// cylinder(d=mufflerOD, h=baffleZ);
-    baseZbelow = 2;
-    baseZabove = 3;
-    baseZ = baseZabove + baseZbelow;
+    coneDeltaZ = 3;
+    baseZabove = 2;
     outerDia = mufflerID + nothing;
     topDia = innerDiaInterior+2;
     coneTopZ = outerDia/2;
@@ -121,13 +120,14 @@ module baffle()
         // Cone exterior:
         union()
         {
-            translate([0,0,baseZbelow]) cylinder(d1=outerDia, d2=0, h=outerDia/2);
-            cylinder(d=outerDia, h=baseZ);
+            translate([0,0,coneDeltaZ]) cylinder(d1=outerDia, d2=0, h=outerDia/2);
+            cylinder(d=outerDia, h=coneDeltaZ+baseZabove);
         }
         // Cone interior:
-        translate([0,0,-nothing]) cylinder(d1=coneInterorDia, d2=0, h=coneInterorDia/2);
+        interiorDia = mufflerID + nothing;
+        translate([0,0,-nothing]) cylinder(d1=mufflerID, d2=0, h=mufflerID/2);
         // Cone top:
-        tcu([-200, -200, baseZbelow+outerDia/2-innerDiaInterior/2-0.4], 400);
+        tcu([-200, -200, coneDeltaZ+outerDia/2-innerDiaInterior/2-0.4], 400);
         // Interior hole:
         tcy([0,0,-1], d=innerDiaInterior, h=400);
     }
