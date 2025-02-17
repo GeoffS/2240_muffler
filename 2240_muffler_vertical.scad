@@ -84,16 +84,10 @@ module itemModule()
 			}
 
 			// Baffles:
-			difference()
-			{
-				for (z=[50, 100]) 
-				{
-					translate([0,0,z]) baffle();
-				}
-				
-				// Interior hole:
-				tcy([0,0,frontZ+1], d=innerDiaInterior, h=400);
-			}
+			for (z=[50, 100]) 
+            {
+                translate([0,0,z]) baffle();
+            }
 		}
 
 		// Top text:
@@ -112,7 +106,31 @@ baffleZ = 2*outerWallPerimeterWidth + 5*innerWallPerimeterWidth;
 echo(str("baffleZ = ", baffleZ));
 module baffle()
 {
-	cylinder(d=mufflerOD, h=baffleZ);
+	// cylinder(d=mufflerOD, h=baffleZ);
+    baseZbelow = 2;
+    baseZabove = 3;
+    baseZ = baseZabove + baseZbelow;
+    outerDia = mufflerID + nothing;
+    topDia = innerDiaInterior+2;
+    coneTopZ = outerDia/2;
+
+    coneInterorDia = outerDia - 4;
+
+    difference()
+    {
+        // Cone exterior:
+        union()
+        {
+            translate([0,0,baseZbelow]) cylinder(d1=outerDia, d2=0, h=outerDia/2);
+            cylinder(d=outerDia, h=baseZ);
+        }
+        // Cone interior:
+        translate([0,0,-nothing]) cylinder(d1=coneInterorDia, d2=0, h=coneInterorDia/2);
+        // Cone top:
+        tcu([-200, -200, baseZbelow+outerDia/2-innerDiaInterior/2-0.4], 400);
+        // Interior hole:
+        tcy([0,0,-1], d=innerDiaInterior, h=400);
+    }
 }
 
 module testModule()
