@@ -4,6 +4,7 @@ include <makeText.scad>
 
 makeFull = false;
 makeTest = false;
+makeDisplay1 = false;
 
 innerWallPerimeterWidth = 0.42;
 outerWallPerimeterWidth = 0.45;
@@ -159,6 +160,15 @@ module testModule()
 	}
 }
 
+module displayModule1()
+{
+	difference()
+	{
+		itemModule();
+		tc([-200, -400, -10], 400);
+	}
+}
+
 module clip(d=0)
 {
 	tc([-200, -400-d, -10], 400);
@@ -168,11 +178,13 @@ module clip(d=0)
 
 if(developmentRender)
 {
-	display() itemModule();
+	// display() itemModule();
 	// display() testModule();
+	display() displayModule1();
 }
 else
 {
-	if(makeFull) itemModule(addBrims=true);
-	if(makeTest) testModule(addBrims=false);
+	if(makeFull) itemModule();
+	if(makeTest) testModule();
+	if(makeDisplay1) displayModule1();
 }
