@@ -13,13 +13,14 @@ layerHeight = 0.2;
 adapterOD = 20.1;
 adapterRecessZ = 25;
 adapterEndWall = 2*outerWallPerimeterWidth + 3*innerWallPerimeterWidth;
-adapterCZ = 12;
+adapterCZ = 18;
 echo(str("adapterEndWall = ", adapterEndWall));
 
-mufflerOD = 60;
+mufflerOD = 65;
 mufflerWallThickness = 6;
 
-mufflerZ = 150;
+mufflerZ = 216.84; // 216.84 = total Z of 250mm
+echo(str("mufflerZ = ", mufflerZ));
 
 innerDiaFront = 5; // drilled/reamed out to final dia.
 innerDiaInterior = 6.5;
@@ -33,6 +34,8 @@ frontCZ = 4;
 
 mufflerTopZ = mufflerZ + adapterRecessZ + adapterEndWall;
 echo(str("mufflerTopZ = ", mufflerTopZ));
+
+echo(str("Muffler Total Z = ", mufflerTopZ + frontZ));
 
 exteriorOffsetXY = mufflerOD/2; //mufflerOD/2 * cos((360/exteriorFN/2));
 
@@ -84,10 +87,18 @@ module itemModule()
 			}
 
 			// Baffles:
-            for (z=[80, 45, 16]) 
+            topBaffleZ = 165;
+            baffleSpacingZ = 30;
+            for (zi=[0, 1, 2, 3, 4, 5]) 
             {
+                z = topBaffleZ-zi*baffleSpacingZ;
+                echo(str("Baffle Z Position = ", z));
                 translate([0,0,z]) baffle();
             }
+            // for (z=[80, 45, 16]) 
+            // {
+            //     translate([0,0,z]) baffle();
+            // }
 		}
 
 		// Top text:
