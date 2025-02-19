@@ -163,10 +163,10 @@ module testModule()
 	}
 }
 
-module adapterRemovalTool(toolHeight_inches=1.5, extrationHeight_inches=3/4)
+module adapterRemovalTool(toolHeight)
 {
-    toolHeight = toolHeight_inches * 25.4;
-    extractionHeight = extrationHeight_inches * 25.4;
+    //toolHeight = toolHeight_inches * 25.4;
+    extractionHeight = toolHeight - 22; //extrationHeight_inches * 25.4;
     echo(str("toolHeight = ", toolHeight));
     echo(str("extractionHeight = ", extractionHeight));
     boltHoleDia = 13;
@@ -202,17 +202,17 @@ module clip(d=0)
 
 if(developmentRender)
 {
-	display() itemModule();
+	// display() itemModule();
 	// display() testModule();
 	// display() displayModule1();
-    // display() adapterRemovalTool(toolHeight_inches=1.5, extrationHeight_inches=3/4);
-    // display() translate([40,0,0]) adapterRemovalTool(toolHeight_inches=1.5+3/4, extrationHeight_inches=3/4+3/4);
+    display() adapterRemovalTool(toolHeight=50);
+    display() translate([40,0,0]) adapterRemovalTool(toolHeight=65);
 }
 else
 {
 	if(makeFull) itemModule();
 	if(makeTest) testModule();
 	if(makeDisplay1) displayModule1();
-	if(makeAdapterRemovalTool1) adapterRemovalTool(toolHeight_inches=1.5, extrationHeight_inches=3/4);
-	if(makeAdapterRemovalTool2) adapterRemovalTool(toolHeight_inches=1.5+3/4, extrationHeight_inches=3/4+3/4);
+	if(makeAdapterRemovalTool1) adapterRemovalTool(toolHeight_inches=1+7/8, extrationHeight_inches=1);
+	if(makeAdapterRemovalTool2) adapterRemovalTool(toolHeight_inches=1+7/8+3/4, extrationHeight_inches=1+3/4);
 }
