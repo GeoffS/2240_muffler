@@ -5,6 +5,8 @@ include <makeText.scad>
 makeFull = false;
 makeTest = false;
 makeDisplay1 = false;
+makeAdapterRemovalTool1 = false;
+makeAdapterRemovalTool2 = false;
 
 innerWallPerimeterWidth = 0.42;
 outerWallPerimeterWidth = 0.45;
@@ -160,6 +162,27 @@ module testModule()
 	}
 }
 
+module adapterRemovalTool(toolHeight_inches=1.5, extrationHeight_inches=3/4)
+{
+    toolHeight = toolHeight_inches * 25.4;
+    extractionHeight = extrationHeight_inches * 25.4;
+    echo(str("toolHeight = ", toolHeight));
+    echo(str("extractionHeight = ", extractionHeight));
+    boltHoleDia = 13;
+    difference()
+    {
+        cylinder(d=adapterOD+8, h=toolHeight);
+
+        hull()
+        {
+            tcy([0,0,-1], d=adapterOD+2, h=extractionHeight+1, $fn=6);
+            cylinder(d=boltHoleDia, h=toolHeight-6);
+        }
+
+        cylinder(d=boltHoleDia, h=100);
+    }
+}
+
 module displayModule1()
 {
 	difference()
@@ -178,13 +201,17 @@ module clip(d=0)
 
 if(developmentRender)
 {
-	// display() itemModule();
+	display() itemModule();
 	// display() testModule();
-	display() displayModule1();
+	// display() displayModule1();
+    // display() adapterRemovalTool(toolHeight_inches=1.5, extrationHeight_inches=3/4);
+    // display() translate([40,0,0]) adapterRemovalTool(toolHeight_inches=1.5+3/4, extrationHeight_inches=3/4+3/4);
 }
 else
 {
 	if(makeFull) itemModule();
 	if(makeTest) testModule();
 	if(makeDisplay1) displayModule1();
+	if(makeAdapterRemovalTool1) adapterRemovalTool(toolHeight_inches=1.5, extrationHeight_inches=3/4);
+	if(makeAdapterRemovalTool2) adapterRemovalTool(toolHeight_inches=1.5+3/4, extrationHeight_inches=3/4+3/4);
 }
