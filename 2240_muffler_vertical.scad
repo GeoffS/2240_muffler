@@ -13,21 +13,21 @@ outerWallPerimeterWidth = 0.45;
 firstLayerHeight = 0.2;
 layerHeight = 0.2;
 
-adapterOD = 20.1;
+adapterOD = 20.2;
 adapterRecessZ = 25;
 adapterEndWall = 2*outerWallPerimeterWidth + 3*innerWallPerimeterWidth;
 adapterCZ = 18;
 echo(str("adapterEndWall = ", adapterEndWall));
 
 mufflerOD = 65;
-mufflerWallThickness = 6;
+mufflerWallThickness = 4;
 
-mufflerZ = 216.84; // 216.84 = total Z of 250mm
+mufflerZ = 150; // 216.84 = total Z of 250mm
 echo(str("mufflerZ = ", mufflerZ));
 
-innerDiaFront = 5; // drilled/reamed out to final dia.
-innerDiaInterior = 6.5;
-innerDiaAdaper = 9;
+innerDiaFront = 10;
+innerDiaInterior = 10;
+innerDiaAdaper = 12;
 
 mufflerID = mufflerOD - 2*mufflerWallThickness;
 echo(str("mufflerID = ", mufflerID));
@@ -69,13 +69,14 @@ module itemModule()
 					frontInteriorZ = 20;
 					frontInteriorCZ = 6;
 					translate([0,0,frontInteriorZ]) mirror([0,0,1]) simpleChamferedCylinder(d=mufflerID, h=frontInteriorZ, cz=frontInteriorCZ);
-					rearInteriorCZ = 20;
+					rearInteriorCZ = 23.4;
 					translate([0,0,frontInteriorZ-nothing]) simpleChamferedCylinder(d=mufflerID, h=mufflerZ-frontInteriorZ+nothing, cz=rearInteriorCZ);
 				}
 
 				// Inner hole:
-				// Front (will be drilled/reamed out):
+				// Front:
 				tcy([0,0,-frontZ-1], d=innerDiaFront, h=frontZ+2);
+                translate([0,0,-5-4]) cylinder(d2=20, d1=0, h=10);
 				// Adapter end::
 				tcy([0,0,mufflerZ-1], d=innerDiaAdaper, h=400);
 
@@ -90,9 +91,9 @@ module itemModule()
 			}
 
 			// Baffles:
-            topBaffleZ = 165;
-            baffleSpacingZ = 30;
-            for (zi=[0, 1, 2, 3, 4, 5]) 
+            topBaffleZ = 95;
+            baffleSpacingZ = 35;
+            for (zi=[0, 1,2]) 
             {
                 z = topBaffleZ-zi*baffleSpacingZ;
                 echo(str("Baffle Z Position = ", z));
