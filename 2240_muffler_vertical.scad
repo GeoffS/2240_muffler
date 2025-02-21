@@ -8,8 +8,14 @@ makeDisplay1 = false;
 makeAdapterRemovalTool1 = false;
 makeAdapterRemovalTool2 = false;
 
-innerWallPerimeterWidth = 0.42;
+// BL A1:
+// innerWallPerimeterWidth = 0.42;
+// outerWallPerimeterWidth = 0.45;
+
+// Prusa Mini:
+innerWallPerimeterWidth = 0.45;
 outerWallPerimeterWidth = 0.45;
+
 firstLayerHeight = 0.2;
 layerHeight = 0.2;
 
@@ -20,9 +26,10 @@ adapterCZ = 18;
 echo(str("adapterEndWall = ", adapterEndWall));
 
 mufflerOD = 65;
-mufflerWallThickness = 4;
+mufflerWallThickness = 7*innerWallPerimeterWidth + outerWallPerimeterWidth;
+echo(str("mufflerWallThickness = ", mufflerWallThickness));
 
-mufflerZ = 150; // 216.84 = total Z of 250mm
+mufflerZ = 120; // 216.84 = total Z of 250mm
 echo(str("mufflerZ = ", mufflerZ));
 
 innerDiaFront = 10;
@@ -91,9 +98,9 @@ module itemModule()
 			}
 
 			// Baffles:
-            topBaffleZ = 95;
+            topBaffleZ = 60;
             baffleSpacingZ = 35;
-            for (zi=[0, 1,2]) 
+            for (zi=[0, 1]) 
             {
                 z = topBaffleZ-zi*baffleSpacingZ;
                 echo(str("Baffle Z Position = ", z));
@@ -202,17 +209,17 @@ module clip(d=0)
 
 if(developmentRender)
 {
-	// display() itemModule();
+	display() itemModule();
 	// display() testModule();
 	// display() displayModule1();
-    display() adapterRemovalTool(toolHeight=50);
-    display() translate([40,0,0]) adapterRemovalTool(toolHeight=65);
+    // display() adapterRemovalTool(toolHeight=50);
+    // display() translate([40,0,0]) adapterRemovalTool(toolHeight=65);
 }
 else
 {
 	if(makeFull) itemModule();
 	if(makeTest) testModule();
 	if(makeDisplay1) displayModule1();
-	if(makeAdapterRemovalTool1) adapterRemovalTool(toolHeight_inches=1+7/8, extrationHeight_inches=1);
-	if(makeAdapterRemovalTool2) adapterRemovalTool(toolHeight_inches=1+7/8+3/4, extrationHeight_inches=1+3/4);
+	if(makeAdapterRemovalTool1) adapterRemovalTool(toolHeight=50);
+	if(makeAdapterRemovalTool2) adapterRemovalTool(toolHeight=65);
 }
