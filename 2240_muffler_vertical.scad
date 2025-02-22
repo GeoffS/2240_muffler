@@ -26,20 +26,20 @@ adapterCZ = 18;
 echo(str("adapterEndWall = ", adapterEndWall));
 
 mufflerOD = 65;
-mufflerWallThickness = 7*innerWallPerimeterWidth + outerWallPerimeterWidth;
+mufflerWallThickness = 4*innerWallPerimeterWidth + outerWallPerimeterWidth;
 echo(str("mufflerWallThickness = ", mufflerWallThickness));
 
-mufflerZ = 120; // 216.84 = total Z of 250mm
+mufflerZ = 145; // 216.84 = total Z of 250mm
 echo(str("mufflerZ = ", mufflerZ));
 
-innerDiaFront = 10;
-innerDiaInterior = 10;
+innerDiaFront = 6.5;
+innerDiaInterior = 6.5;
 innerDiaAdaper = 12;
 
 mufflerID = mufflerOD - 2*mufflerWallThickness;
 echo(str("mufflerID = ", mufflerID));
 
-frontZ = 6;
+frontZ = 4;
 frontCZ = 4;
 
 mufflerTopZ = mufflerZ + adapterRecessZ + adapterEndWall;
@@ -83,7 +83,7 @@ module itemModule()
 				// Inner hole:
 				// Front:
 				tcy([0,0,-frontZ-1], d=innerDiaFront, h=frontZ+2);
-                translate([0,0,-5-4]) cylinder(d2=20, d1=0, h=10);
+                translate([0,0,-innerDiaFront/2-frontZ/2]) cylinder(d2=20, d1=0, h=10);
 				// Adapter end::
 				tcy([0,0,mufflerZ-1], d=innerDiaAdaper, h=400);
 
@@ -98,9 +98,9 @@ module itemModule()
 			}
 
 			// Baffles:
-            topBaffleZ = 60;
-            baffleSpacingZ = 35;
-            for (zi=[0, 1]) 
+            topBaffleZ = mufflerZ - 50;
+            baffleSpacingZ = 28;
+            for (zi=[0, 1, 2, 3]) 
             {
                 z = topBaffleZ-zi*baffleSpacingZ;
                 echo(str("Baffle Z Position = ", z));
@@ -129,7 +129,7 @@ echo(str("baffleZ = ", baffleZ));
 module baffle()
 {
 	// cylinder(d=mufflerOD, h=baffleZ);
-    coneDeltaZ = 3;
+    coneDeltaZ = 2;
     baseZabove = 2;
     outerDia = mufflerID + nothing;
     topDia = innerDiaInterior+2;
