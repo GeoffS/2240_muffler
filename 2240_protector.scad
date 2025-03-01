@@ -10,11 +10,12 @@ protectorZ = threadedLength+3;
 protectorOD = 16;
 exitDia = 8;
 
-module basicPart()
+module basicPart(cz=0)
 {
 	difference()
     {
-        cylinder(d=protectorOD, h=protectorZ);
+        // cylinder(d=protectorOD, h=protectorZ);
+        simpleChamferedCylinder(d=protectorOD, h=protectorZ, cz=cz);
 
         // Bore:
         tcy([0,0,-1], d=exitDia, h=100);
@@ -55,11 +56,17 @@ module threaded(doThreads=true)
 
 module unThreaded()
 {
+    bodyCZ = 1;
+
+    gripDia = 3;
+    gripZ = 5;
+    gripCZ = 0.8;
+
     difference()
     {
         union()
         {
-            basicPart();
+            basicPart(cz=bodyCZ);
 
             // difference()
             // {
@@ -69,13 +76,10 @@ module unThreaded()
             //     cylinder(d=protectorOD-nothing, h=30);
             // }
 
-            gripDia = 3;
-            gripZ = 5;
-            translate([0,0,protectorZ-gripZ]) for(a = [0:30:360])
+            translate([0,0,protectorZ-gripZ-bodyCZ]) for(a = [0:30:360])
             {
                 echo(str("a = ", a));
-                cz = 0.8;
-                rotate([0,0,a]) translate([protectorOD/2-gripDia/2+cz,0,0]) simpleChamferedCylinderDoubleEnded(d=gripDia, h=gripZ, cz=cz);
+                rotate([0,0,a]) translate([protectorOD/2-gripDia/2+gripCZ,0,0]) simpleChamferedCylinderDoubleEnded(d=gripDia, h=gripZ, cz=gripCZ);
             }
         }
 
