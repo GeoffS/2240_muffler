@@ -59,7 +59,7 @@ module unThreaded()
     bodyCZ = 1;
 
     gripDia = 3;
-    gripZ = 5;
+    gripZ =protectorZ - bodyCZ;
     gripCZ = 0.8;
 
     difference()
@@ -76,14 +76,14 @@ module unThreaded()
             //     cylinder(d=protectorOD-nothing, h=30);
             // }
 
-            translate([0,0,protectorZ-gripZ-bodyCZ]) for(a = [0:30:360])
+            for(a = [0:30:360])
             {
                 echo(str("a = ", a));
                 rotate([0,0,a]) translate([protectorOD/2-gripDia/2+gripCZ,0,0]) simpleChamferedCylinderDoubleEnded(d=gripDia, h=gripZ, cz=gripCZ);
             }
         }
 
-        translate([0,0,-1]) cylinder(d=12.8, h=threadedLength+1);
+        translate([0,0,-1]) cylinder(d=12.85, h=threadedLength+1);
         translate([0,0,-10+6+1]) cylinder(d2=0, d1=20, h=10);
     }
 }
