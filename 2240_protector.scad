@@ -5,7 +5,7 @@ threadedLength = 13.5;
 protectorZ = threadedLength+3;
 exitDia = 8;
 
-module itemModule()
+module itemModule(doThreads=true)
 {
 	difference()
     {
@@ -18,7 +18,7 @@ module itemModule()
         tcy([0,0,-1], d=exitDia, h=100);
 
         // Threads:
-        translate([0,0,-1]) english_thread(diameter=0.5+0.004, threads_per_inch=20, length=(threadedLength+1)/25.4, internal=true);
+        if(doThreads) translate([0,0,-1]) english_thread(diameter=0.5+0.004, threads_per_inch=20, length=(threadedLength+1)/25.4, internal=true);
 
         // Threads inner "loosening":
         tcy([0,0,-1], d=11.6, h=threadedLength+1);
@@ -38,7 +38,7 @@ module clip(d=0)
 
 if(developmentRender)
 {
-	display() itemModule();
+	display() itemModule(doThreads=false);
 }
 else
 {
