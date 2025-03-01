@@ -28,18 +28,20 @@ module basicPart(cz=0)
 
 module threaded(doThreads=true)
 {
+    bodyCZ = 1;
+
 	difference()
     {
         union()
         {
-            basicPart();
+            basicPart(cz=bodyCZ);
 
             gripDia = 3;
             for(a = [0:30:360])
             {
                 echo(str("a = ", a));
                 cz = 0.8;
-                rotate([0,0,a]) translate([protectorOD/2-gripDia/2+cz,0,0]) simpleChamferedCylinderDoubleEnded(d=gripDia, h=protectorZ, cz=cz);
+                rotate([0,0,a]) translate([protectorOD/2-gripDia/2+cz,0,0]) simpleChamferedCylinderDoubleEnded(d=gripDia, h=protectorZ-bodyCZ, cz=cz);
             }
         }
 
