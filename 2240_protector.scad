@@ -61,12 +61,21 @@ module unThreaded()
         {
             basicPart();
 
-            difference()
-            {
-                gripZ = 3;
-                translate([0,0,protectorZ-gripZ]) simpleChamferedCylinderDoubleEnded(d=protectorOD+2, h=gripZ, cz=1);
+            // difference()
+            // {
+            //     gripZ = 3;
+            //     translate([0,0,protectorZ-gripZ]) simpleChamferedCylinderDoubleEnded(d=protectorOD+2, h=gripZ, cz=1);
 
-                cylinder(d=protectorOD-nothing, h=30);
+            //     cylinder(d=protectorOD-nothing, h=30);
+            // }
+
+            gripDia = 3;
+            gripZ = 5;
+            translate([0,0,protectorZ-gripZ]) for(a = [0:30:360])
+            {
+                echo(str("a = ", a));
+                cz = 0.8;
+                rotate([0,0,a]) translate([protectorOD/2-gripDia/2+cz,0,0]) simpleChamferedCylinderDoubleEnded(d=gripDia, h=gripZ, cz=cz);
             }
         }
 
