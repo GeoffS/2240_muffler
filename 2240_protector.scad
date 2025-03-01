@@ -15,25 +15,27 @@ module itemModule(doThreads=true)
         {
             cylinder(d=protectorOD, h=protectorZ);
 
-            gripDia = 3;
-            for(a = [0:30:360])
-            {
-                echo(str("a = ", a));
-                cz = 0.8;
-                rotate([0,0,a]) translate([protectorOD/2-gripDia/2+cz,0,0]) simpleChamferedCylinderDoubleEnded(d=gripDia, h=protectorZ, cz=cz);
-            }
+            // gripDia = 3;
+            // for(a = [0:30:360])
+            // {
+            //     echo(str("a = ", a));
+            //     cz = 0.8;
+            //     rotate([0,0,a]) translate([protectorOD/2-gripDia/2+cz,0,0]) simpleChamferedCylinderDoubleEnded(d=gripDia, h=protectorZ, cz=cz);
+            // }
         }
 
         // Bore:
         tcy([0,0,-1], d=exitDia, h=100);
 
         // Threads:
-        if(doThreads) translate([0,0,-1]) english_thread(diameter=0.5+0.004, threads_per_inch=20, length=(threadedLength+1)/25.4, internal=true);
+        if(doThreads) translate([0,0,-1]) english_thread(diameter=0.5+0.008, threads_per_inch=20, length=(threadedLength+1)/25.4, internal=true);
 
         // Threads inner "loosening":
         tcy([0,0,-1], d=11.6, h=threadedLength+1);
 
         // Starting Chamfer:
+        // translate([0,0,-10+6+1]) cylinder(d2=0, d1=20, h=10);
+        translate([0,0,-1]) simpleChamferedCylinder(d=12.8, h=6+1.5, cz=1.5);
         translate([0,0,-10+6+1]) cylinder(d2=0, d1=20, h=10);
 
         // Exit chafer:
@@ -43,7 +45,7 @@ module itemModule(doThreads=true)
 
 module clip(d=0)
 {
-	// tc([-200, -400-d, -10], 400);
+	tc([-200, -400-d, -10], 400);
 }
 
 if(developmentRender)
