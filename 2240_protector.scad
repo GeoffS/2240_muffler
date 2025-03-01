@@ -3,7 +3,8 @@ include <../OpenSCAD_Lib/threads.scad>
 include <../OpenSCAD_Lib/chamferedCylinders.scad>
 
 makeThreaded = false;
-makeUnthreaded = false;
+makeUnthreadedTwistOn = false;
+makeUnthreadedPushOn = false;
 
 threadedLength = 13.5;
 protectorZ = threadedLength+3;
@@ -54,7 +55,7 @@ module threaded(doThreads=true)
     }
 }
 
-module unThreaded()
+module unThreadedTwistOn()
 {
     bodyCZ = 1;
 
@@ -68,18 +69,38 @@ module unThreaded()
         {
             basicPart(cz=bodyCZ);
 
-            // difference()
-            // {
-            //     gripZ = 3;
-            //     translate([0,0,protectorZ-gripZ]) simpleChamferedCylinderDoubleEnded(d=protectorOD+2, h=gripZ, cz=1);
-
-            //     cylinder(d=protectorOD-nothing, h=30);
-            // }
-
             for(a = [0:30:360])
             {
                 echo(str("a = ", a));
                 rotate([0,0,a]) translate([protectorOD/2-gripDia/2+gripCZ,0,0]) simpleChamferedCylinderDoubleEnded(d=gripDia, h=gripZ, cz=gripCZ);
+            }
+        }
+
+        translate([0,0,-1]) cylinder(d=12.8, h=threadedLength+1);
+        translate([0,0,-10+6+1]) cylinder(d2=0, d1=20, h=10);
+    }
+}
+
+
+module unThreadedPushOn()
+{
+    bodyCZ = 1;
+
+    gripDia = 3;
+    gripZ = 3;
+    gripCZ = 0.8;
+
+    difference()
+    {
+        union()
+        {
+            basicPart(cz=bodyCZ);
+
+            difference()
+            {
+                translate([0,0,protectorZ-gripZ-bodyCZ]) simpleChamferedCylinderDoubleEnded(d=protectorOD+2, h=gripZ, cz=1);
+
+                cylinder(d=protectorOD-nothing, h=30);
             }
         }
 
@@ -90,16 +111,18 @@ module unThreaded()
 
 module clip(d=0)
 {
-	tc([-200, -400-d, -10], 400);
+	// tc([-200, -400-d, -10], 400);
 }
 
 if(developmentRender)
 {
-	// display() threaded(doThreads=false);
-    display() unThreaded();
+	display() translate([-25,0,0]) threaded(doThreads=false);
+    display() translate([ 25,0,0]) unThreadedTwistOn();
+    display() unThreadedPushOn();
 }
 else
 {
 	if(makeThreaded) mirror([0,0,1]) threaded();
-    if(makeUnthreaded) mirror([0,0,1]) unThreaded();
+    if(makeUnthreadedTwistOn) mirror([0,0,1]) unThreadedTwistOn();
+    if(makeUnthreadedPushOn) mirror([0,0,1]) unThreadedPushOn();
 }
