@@ -1,8 +1,10 @@
 include <../OpenSCAD_Lib/MakeInclude.scad>
 include <../OpenSCAD_Lib/threads.scad>
+include <../OpenSCAD_Lib/chamferedCylinders.scad>
 
 threadedLength = 13.5;
 protectorZ = threadedLength+3;
+protectorOD = 16;
 exitDia = 8;
 
 module itemModule(doThreads=true)
@@ -11,7 +13,15 @@ module itemModule(doThreads=true)
     {
         union()
         {
-            cylinder(d=16, h=protectorZ);
+            cylinder(d=protectorOD, h=protectorZ);
+
+            gripDia = 3;
+            for(a = [0:30:360])
+            {
+                echo(str("a = ", a));
+                cz = 0.8;
+                rotate([0,0,a]) translate([protectorOD/2-gripDia/2+cz,0,0]) simpleChamferedCylinderDoubleEnded(d=gripDia, h=protectorZ, cz=cz);
+            }
         }
 
         // Bore:
@@ -33,7 +43,7 @@ module itemModule(doThreads=true)
 
 module clip(d=0)
 {
-	tc([-200, -400-d, -10], 400);
+	// tc([-200, -400-d, -10], 400);
 }
 
 if(developmentRender)
