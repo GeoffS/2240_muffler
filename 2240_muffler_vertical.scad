@@ -25,11 +25,11 @@ adapterEndWall = 2*outerWallPerimeterWidth + 3*innerWallPerimeterWidth;
 adapterCZ = 18;
 echo(str("adapterEndWall = ", adapterEndWall));
 
-mufflerOD = 65;
+// mufflerOD = 65;
 mufflerWallThickness = 4*innerWallPerimeterWidth + outerWallPerimeterWidth;
 echo(str("mufflerWallThickness = ", mufflerWallThickness));
 
-mufflerZ = 145; // 216.84 = total Z of 250mm
+// mufflerZ = 145; // 216.84 = total Z of 250mm
 echo(str("mufflerZ = ", mufflerZ));
 
 innerDiaFront = 6.5;
@@ -98,9 +98,9 @@ module itemModule()
 			}
 
 			// Baffles:
-            topBaffleZ = mufflerZ - 50;
-            baffleSpacingZ = 28;
-            for (zi=[0, 1, 2, 3]) 
+            // topBaffleZ = mufflerZ - 50;
+            // baffleSpacingZ = 28;
+            for (zi=[0:1:numBaffles-1]) 
             {
                 z = topBaffleZ-zi*baffleSpacingZ;
                 echo(str("Baffle Z Position = ", z));
