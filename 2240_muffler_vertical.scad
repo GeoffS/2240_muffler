@@ -2,7 +2,7 @@ include <../OpenSCAD_Lib/MakeInclude.scad>
 include <../OpenSCAD_Lib/chamferedCylinders.scad>
 include <makeText.scad>
 
-makeFull = false;
+// makeFull = false;
 makeTest = false;
 makeDisplay1 = false;
 makeAdapterRemovalTool1 = false;
@@ -13,16 +13,16 @@ makeAdapterRemovalTool2 = false;
 // outerWallPerimeterWidth = 0.45;
 
 // Prusa Mini:
-innerWallPerimeterWidth = 0.45;
-outerWallPerimeterWidth = 0.45;
+// innerWallPerimeterWidth = 0.45;
+// outerWallPerimeterWidth = 0.45;
 
-firstLayerHeight = 0.2;
-layerHeight = 0.2;
+// firstLayerHeight = 0.2;
+// layerHeight = 0.2;
 
 adapterOD = 20.2;
 adapterRecessZ = 25;
 adapterEndWall = 2*outerWallPerimeterWidth + 3*innerWallPerimeterWidth;
-adapterCZ = 18;
+// adapterCZ = 18;
 echo(str("adapterEndWall = ", adapterEndWall));
 
 // mufflerOD = 65;
@@ -48,6 +48,8 @@ echo(str("mufflerTopZ = ", mufflerTopZ));
 echo(str("Muffler Total Z = ", mufflerTopZ + frontZ));
 
 exteriorOffsetXY = mufflerOD/2; //mufflerOD/2 * cos((360/exteriorFN/2));
+
+// rearInteriorCZ = 23.4;
 
 module itemModule()
 {
@@ -76,7 +78,6 @@ module itemModule()
 					frontInteriorZ = 20;
 					frontInteriorCZ = 6;
 					translate([0,0,frontInteriorZ]) mirror([0,0,1]) simpleChamferedCylinder(d=mufflerID, h=frontInteriorZ, cz=frontInteriorCZ);
-					rearInteriorCZ = 23.4;
 					translate([0,0,frontInteriorZ-nothing]) simpleChamferedCylinder(d=mufflerID, h=mufflerZ-frontInteriorZ+nothing, cz=rearInteriorCZ);
 				}
 
@@ -129,7 +130,7 @@ echo(str("baffleZ = ", baffleZ));
 module baffle()
 {
 	// cylinder(d=mufflerOD, h=baffleZ);
-    coneDeltaZ = 2;
+    // coneDeltaZ = 2;
     baseZabove = 2;
     outerDia = mufflerID + nothing;
     topDia = innerDiaInterior+2;
