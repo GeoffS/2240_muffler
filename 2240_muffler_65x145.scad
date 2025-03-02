@@ -1,3 +1,5 @@
+makeFull = false;
+
 mufflerOD = 65;
 mufflerZ = 145;
 
