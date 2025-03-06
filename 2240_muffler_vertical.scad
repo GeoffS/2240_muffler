@@ -8,24 +8,12 @@ makeDisplay1 = false;
 makeAdapterRemovalTool1 = false;
 makeAdapterRemovalTool2 = false;
 
-// BL A1:
-// innerWallPerimeterWidth = 0.42;
-// outerWallPerimeterWidth = 0.45;
-
-// Prusa Mini:
-// innerWallPerimeterWidth = 0.45;
-// outerWallPerimeterWidth = 0.45;
-
-// firstLayerHeight = 0.2;
-// layerHeight = 0.2;
 
 adapterOD = 20.2;
 adapterRecessZ = 25;
 adapterEndWall = 2*outerWallPerimeterWidth + 3*innerWallPerimeterWidth;
-// adapterCZ = 18;
 echo(str("adapterEndWall = ", adapterEndWall));
 
-// mufflerOD = 65;
 mufflerWallThickness = 4*innerWallPerimeterWidth + outerWallPerimeterWidth;
 echo(str("mufflerWallThickness = ", mufflerWallThickness));
 
@@ -48,8 +36,6 @@ echo(str("mufflerTopZ = ", mufflerTopZ));
 echo(str("Muffler Total Z = ", mufflerTopZ + frontZ));
 
 exteriorOffsetXY = mufflerOD/2; //mufflerOD/2 * cos((360/exteriorFN/2));
-
-// rearInteriorCZ = 23.4;
 
 module itemModule()
 {
@@ -99,18 +85,12 @@ module itemModule()
 			}
 
 			// Baffles:
-            // topBaffleZ = mufflerZ - 50;
-            // baffleSpacingZ = 28;
             for (zi=[0:1:numBaffles-1]) 
             {
                 z = topBaffleZ-zi*baffleSpacingZ;
                 echo(str("Baffle Z Position = ", z));
                 translate([0,0,z]) baffle();
             }
-            // for (z=[80, 45, 16]) 
-            // {
-            //     translate([0,0,z]) baffle();
-            // }
 		}
 
 		// Top text:
