@@ -16,11 +16,12 @@ adapterCZ = 8;
 topBaffleZ = mufflerZ - 38;
 baffleSpacingZ = 25;
 numBaffles = 3;
-coneDeltaZ = 5*layerHeight;
-echo(str("coneDeltaZ = ", coneDeltaZ));
+coneDeltaZ = 8*layerHeight;
 
 innerDiaFront = 8;
 innerDiaInterior = (0.22*25.4) + 2;
 echo(str("innerDiaInterior = ", innerDiaInterior));
+
+frontZ = firstLayerHeight + 9*layerHeight;
 
 include <2240_muffler_vertical.scad>

@@ -8,6 +8,7 @@ makeDisplay1 = false;
 makeAdapterRemovalTool1 = false;
 makeAdapterRemovalTool2 = false;
 
+addText = false;
 
 adapterOD = 20.2;
 adapterRecessZ = 25;
@@ -24,7 +25,8 @@ innerDiaAdaper = 12;
 mufflerID = mufflerOD - 2*mufflerWallThickness;
 echo(str("mufflerID = ", mufflerID));
 
-frontZ = 4;
+// frontZ = 4;
+echo(str("frontZ = ", frontZ));
 frontCZ = 4;
 
 mufflerTopZ = mufflerZ + adapterRecessZ + adapterEndWall;
@@ -52,7 +54,7 @@ module itemModule()
                     x = 14;
                     y = nothing;
                     z = mufflerTopZ - adapterCZ + frontExtraZ;
-                    tcu([-x/2, exteriorOffsetXY-nothing, -frontExtraZ], [x, y, z]);
+                    if(addText) tcu([-x/2, exteriorOffsetXY-nothing, -frontExtraZ], [x, y, z]);
 				}
 
 				// Interior:
@@ -91,19 +93,21 @@ module itemModule()
 		}
 
 		// Top text:
-		textIndent = 2*layerHeight;
-		textCenterZ = mufflerTopZ - adapterCZ;
-		topTextStr = ".22 cal. Airgun Use Only";
-		echo(str("exteriorOffsetXY = ", exteriorOffsetXY));
-		translate([-0.55, exteriorOffsetXY-textIndent, textCenterZ/2]) rotate([-90,0,0]) rotate([0,0,-90]) 
-		{
-			makeText(topTextStr); 
+		if(addText)
+			{
+			textIndent = 2*layerHeight;
+			textCenterZ = mufflerTopZ - adapterCZ;
+			topTextStr = ".22 cal. Airgun Use Only";
+			echo(str("exteriorOffsetXY = ", exteriorOffsetXY));
+			translate([-0.55, exteriorOffsetXY-textIndent, textCenterZ/2]) rotate([-90,0,0]) rotate([0,0,-90]) 
+			{
+				makeText(topTextStr); 
+			}
 		}
 	}
 }
 
-baffleZ = 2*outerWallPerimeterWidth + 5*innerWallPerimeterWidth;
-echo(str("baffleZ = ", baffleZ));
+echo(str("coneDeltaZ = ", coneDeltaZ));
 module baffle()
 {
 	// cylinder(d=mufflerOD, h=baffleZ);
