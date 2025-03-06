@@ -14,14 +14,11 @@ adapterRecessZ = 25;
 adapterEndWall = 2*outerWallPerimeterWidth + 3*innerWallPerimeterWidth;
 echo(str("adapterEndWall = ", adapterEndWall));
 
-mufflerWallThickness = 4*innerWallPerimeterWidth + outerWallPerimeterWidth;
+// mufflerWallThickness = 4*innerWallPerimeterWidth + outerWallPerimeterWidth;
 echo(str("mufflerWallThickness = ", mufflerWallThickness));
 
 // mufflerZ = 145; // 216.84 = total Z of 250mm
 echo(str("mufflerZ = ", mufflerZ));
-
-innerDiaFront = 6.5;
-innerDiaInterior = 6.5;
 innerDiaAdaper = 12;
 
 mufflerID = mufflerOD - 2*mufflerWallThickness;
@@ -195,6 +192,8 @@ if(developmentRender)
 	// display() displayModule1();
     // display() adapterRemovalTool(toolHeight=50);
     // display() translate([40,0,0]) adapterRemovalTool(toolHeight=65);
+
+	displayGhost() tcy([0,0,-10], d=0.22*25.4, h=200);
 }
 else
 {

@@ -18,4 +18,8 @@ baffleSpacingZ = 28;
 numBaffles = 4;
 coneDeltaZ = 2;
 
+innerDiaFront = 6.5;
+innerDiaInterior = 6.5;
+mufflerWallThickness = 4*innerWallPerimeterWidth + outerWallPerimeterWidth;
+
 include <2240_muffler_vertical.scad>

@@ -18,4 +18,8 @@ numBaffles = 6;
 coneDeltaZ = 5*layerHeight;
 echo(str("coneDeltaZ = ", coneDeltaZ));
 
+innerDiaFront = 6.5;
+innerDiaInterior = 6.5;
+mufflerWallThickness = 4*innerWallPerimeterWidth + outerWallPerimeterWidth;
+
 include <2240_muffler_vertical.scad>
