@@ -59,7 +59,7 @@ module itemModule()
 					{
 						z = adapterCylinderZ - adapterCylinderOffsetZ;
 						cylinder(d=mufflerOD, h=z+nothing);
-						translate([0,0,z]) cylinder(d1=mufflerOD, d2=adapterOD+11, h=adapterTaperZ);
+						translate([0,0,z]) cylinder(d1=mufflerOD, d2=adapterOD+13, h=adapterTaperZ);
 					}
 
                     x = 14;
