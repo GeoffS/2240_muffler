@@ -11,11 +11,11 @@ mufflerOD = 65;
 mufflerZ = 145;
 mufflerWallThickness = 2*innerWallPerimeterWidth + 2*outerWallPerimeterWidth;
 
-rearInteriorCZ = 23.4;
+rearInteriorCZ = 25.7; //23.4;
 adapterCZ = 18;
 
-topBaffleZ = mufflerZ - 50;
-baffleSpacingZ = 28;
+topBaffleZ = mufflerZ - 53;
+baffleSpacingZ = 26.55;
 numBaffles = 4;
 coneDeltaZ = 8*layerHeight;; //2;
 
