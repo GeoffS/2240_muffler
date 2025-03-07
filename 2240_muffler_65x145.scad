@@ -8,14 +8,14 @@ makeFull = false;
 // layerHeight = 0.2;
 
 // BL A1:
-innerWallPerimeterWidth = 0.45;
+innerWallPerimeterWidth = 0.45; // nominal 0.45
 outerWallPerimeterWidth = 0.42;
 firstLayerHeight = 0.2;
 layerHeight = 0.2;
 
 mufflerOD = 65;
 mufflerZ = 145;
-mufflerWallThickness = 2*innerWallPerimeterWidth + 2*outerWallPerimeterWidth;
+mufflerWallThickness = 3*innerWallPerimeterWidth + 2*outerWallPerimeterWidth;
 
 rearInteriorCZ = 25.7; //23.4;
 adapterCZ = 18;
