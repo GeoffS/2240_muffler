@@ -62,7 +62,6 @@ module itemModule()
 						translate([0,0,z]) cylinder(d1=mufflerOD, d2=adapterOD+11, h=adapterTaperZ);
 					}
 
-                    //frontExtraZ = frontZ - frontCZ;
                     x = 14;
                     y = nothing;
                     z = mufflerTopZ - adapterCZ + frontExtraZ;
@@ -73,7 +72,7 @@ module itemModule()
 				union()
 				{
 					frontInteriorZ = 20;
-					frontInteriorCZ = 6;
+					frontInteriorCZ = 3;  // SHOULD BE CALCULATED!!
 					translate([0,0,frontInteriorZ]) mirror([0,0,1]) simpleChamferedCylinder(d=mufflerID, h=frontInteriorZ, cz=frontInteriorCZ);
 					translate([0,0,frontInteriorZ-nothing]) simpleChamferedCylinder(d=mufflerID, h=mufflerZ-frontInteriorZ+nothing, cz=rearInteriorCZ);
 				}
