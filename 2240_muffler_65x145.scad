@@ -1,9 +1,15 @@
 
 makeFull = false;
 
-// Prusa Mini:
+// // Prusa Mini:
+// innerWallPerimeterWidth = 0.45;
+// outerWallPerimeterWidth = 0.45;
+// firstLayerHeight = 0.2;
+// layerHeight = 0.2;
+
+// BL A1:
 innerWallPerimeterWidth = 0.45;
-outerWallPerimeterWidth = 0.45;
+outerWallPerimeterWidth = 0.42;
 firstLayerHeight = 0.2;
 layerHeight = 0.2;
 
