@@ -49,10 +49,20 @@ module itemModule()
 				// Exterior:
 				hull()
 				{
-					mirror([0,0,1]) simpleChamferedCylinder(d=mufflerOD, h=frontZ, cz=frontCZ);
-					simpleChamferedCylinder(d=mufflerOD, h=mufflerTopZ, cz=adapterCZ);
+					frontExtraZ = 1;
+					frontTotalZ = frontCZ+frontExtraZ;
+					translate([0,0,frontTotalZ-frontZ]) mirror([0,0,1]) simpleChamferedCylinder(d=mufflerOD, h=frontTotalZ, cz=frontCZ);
+					adapterCylinderOffsetZ = frontTotalZ - frontZ;
+					adapterTaperZ = 54;  // SHOULD BE CALCULATED!!
+					adapterCylinderZ = mufflerTopZ - adapterTaperZ;
+					translate([0,0,adapterCylinderOffsetZ])
+					{
+						z = adapterCylinderZ - adapterCylinderOffsetZ;
+						cylinder(d=mufflerOD, h=z+nothing);
+						translate([0,0,z]) cylinder(d1=mufflerOD, d2=adapterOD+11, h=adapterTaperZ);
+					}
 
-                    frontExtraZ = frontZ - frontCZ;
+                    //frontExtraZ = frontZ - frontCZ;
                     x = 14;
                     y = nothing;
                     z = mufflerTopZ - adapterCZ + frontExtraZ;
@@ -70,7 +80,7 @@ module itemModule()
 
 				// Inner hole:
 				// Front:
-				tcy([0,0,-frontZ-1], d=innerDiaFront, h=frontZ+2);
+				tcy([0,0,-20], d=innerDiaFront, h=20);
                 translate([0,0,-innerDiaFront/2-frontZ/2]) cylinder(d2=20, d1=0, h=10);
 				// Adapter end::
 				tcy([0,0,mufflerZ-1], d=innerDiaAdaper, h=400);
