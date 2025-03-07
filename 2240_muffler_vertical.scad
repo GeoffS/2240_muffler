@@ -10,6 +10,8 @@ makeAdapterRemovalTool2 = false;
 
 addText = false;
 
+echo(str("innerDiaInterior = ", innerDiaInterior));
+
 adapterOD = 20.2;
 adapterRecessZ = 25;
 adapterEndWall = 2*outerWallPerimeterWidth + 3*innerWallPerimeterWidth;
