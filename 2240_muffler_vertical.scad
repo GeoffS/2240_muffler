@@ -12,7 +12,7 @@ addText = false;
 
 echo(str("innerDiaInterior = ", innerDiaInterior));
 
-adapterOD = 20.2;
+adapterOD = 20.15;
 adapterRecessZ = 25;
 adapterEndWall = 2*outerWallPerimeterWidth + 3*innerWallPerimeterWidth;
 echo(str("adapterEndWall = ", adapterEndWall));
